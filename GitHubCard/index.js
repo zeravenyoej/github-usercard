@@ -8,11 +8,10 @@ const cardsDiv = document.querySelector('.cards');
 
 axios.get('https://api.github.com/users/zeravenyoej')
   .then(response => {
-    console.log(response);
-    //response.data.forEach(item => {
-      const newData = response.data;
-      const newGitHubCard = gitHubCard(newData);
-      cardsDiv.appendChild(newGitHubCard);
+    //console.log(response);
+    const newData = response.data;
+    const newGitHubCard = gitHubCard(newData);
+    cardsDiv.appendChild(newGitHubCard);
   })
   .catch(error => {
     console.log('The data was not returned', error);
@@ -36,7 +35,7 @@ axios.get('https://api.github.com/users/zeravenyoej')
 
 
 /* Step 5: Now that you have your own card getting added to the DOM, either 
-          follow this link in your browser https://api.github.com/users/<Your github name>/followers 
+          follow this link in your browser https://api.github.com/users/<zeravenyoej>/followers 
           , manually find some other users' github handles, or use the list found 
           at the bottom of the page. Get at least 5 different Github usernames and add them as
           Individual strings to the friendsArray below.
@@ -45,7 +44,17 @@ axios.get('https://api.github.com/users/zeravenyoej')
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['seanaleid', 'Jnmendza', 'mxxt1', 'BaoPham92', 'vishalicious213'];
+
+followersArray.forEach(user => {
+  axios.get(`https://api.github.com/users/${user}`)
+
+  .then(response => {
+    const newData = response.data;
+    const newGitHubCard = gitHubCard(newData)
+    cardsDiv.appendChild(newGitHubCard);
+  })
+})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
