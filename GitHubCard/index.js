@@ -2,9 +2,15 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+
+const cardDiv = document.querySelector('.cards');
+
 axios.get('https://api.github.com/users/zeravenyoej')
   .then(res=>{
     console.log(res);
+    const newRes = res.data;
+    const newCard = createCard(newRes);
+    cardDiv.appendChild(newCard);
   })
   .catch(err=>{
     console.log(err);
@@ -53,6 +59,52 @@ const followersArray = [];
 </div>
 
 */
+
+
+
+function createCard (object){
+  const card = document.createElement('div');
+  card.classList.add('card');
+  const img = document.createElement('img');
+  const cardInfoDiv = document.createElement('div');
+  cardInfoDiv.classList.add('card-info');
+  const name = document.createElement('h3');
+  name.classList.add('name');
+  const userName = document.createElement('p');
+  userName.classList.add('username');
+  const loc = document.createElement('p');
+  const prof = document.createElement('p');
+  const link = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+
+
+  card.appendChild(img);
+  card.appendChild(cardInfoDiv);
+  cardInfoDiv.appendChild(name);
+  cardInfoDiv.appendChild(userName);
+  cardInfoDiv.appendChild(loc);
+  cardInfoDiv.appendChild(prof);
+  cardInfoDiv.appendChild(link);
+  cardInfoDiv.appendChild(followers);
+  cardInfoDiv.appendChild(following);
+  cardInfoDiv.appendChild(bio);
+  prof.appendChild(link);
+
+  img.src=object.avatar_url;
+  name.textContent=object.name;
+  userName.textContent=object.login;
+  loc.textContent=object.location;
+  prof.textContent='Profile: '
+  link.src=object.html_url;
+  followers.textContent=`Followers: ${object.followers}`;
+  following.textContent=`Following: ${object.following}`;
+  bio.textContent=`Bio: ${object.bio}`;
+
+  return card;
+};
+
 
 /* List of LS Instructors Github username's: 
   tetondan
