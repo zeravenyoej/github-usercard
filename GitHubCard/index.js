@@ -38,16 +38,45 @@ axios.get('https://api.github.com/users/zeravenyoej')
           user, and adding that card to the DOM.
 */
 
-const followersArray = ['vishalicious213', 'mxxt1', 'darrenjcarrillo', 'Jnmendza', 'seanaleid', 'BaoPham92', 'Lfritze', 'imMichaelHarris'];
+//Instead of manually creating a list of followers, do it programmatically. 
+//Create a function that requests the followers data from the API after it has received your data 
+//and create a card for each of your followers. Hint: you can chain promises.
 
-followersArray.forEach(person=>{
-  axios.get(`https://api.github.com/users/${person}`)
-    .then (res=>{
-    let newRes = res.data;
-    let newCard = createCard(newRes);
-    cardDiv.appendChild(newCard);
+function makeCardForFollowers(user){
+  axios.get(`https://api.github.com/users/${user}/followers`)
+    .then(res=>{
+      let newRes = res.data
+      newRes.forEach(item=>{
+        const followersArray=[];
+        followersArray.push(item.login);
+        console.log(followersArray);
+        followersArray.forEach(person=>{
+          axios.get(`https://api.github.com/users/${person}`)
+            .then (res=>{
+            let newRes = res.data;
+            let newCard = createCard(newRes);
+            cardDiv.appendChild(newCard);
+            })
+        })
+      })
     })
-})
+    .catch(err=>{
+      console.log(err);
+    })
+}
+makeCardForFollowers('zeravenyoej');
+makeCardForFollowers('seanaleid');
+
+// const followersArray = ['vishalicious213', 'mxxt1', 'darrenjcarrillo', 'Jnmendza', 'seanaleid', 'BaoPham92', 'Lfritze', 'imMichaelHarris'];
+
+// followersArray.forEach(person=>{
+//   axios.get(`https://api.github.com/users/${person}`)
+//     .then (res=>{
+//     let newRes = res.data;
+//     let newCard = createCard(newRes);
+//     cardDiv.appendChild(newCard);
+//     })
+// })
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -121,3 +150,4 @@ function createCard (object){
   luishrd
   bigknell
 */
+
