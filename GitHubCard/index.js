@@ -105,8 +105,7 @@ function createCard (object){
   name.textContent=object.name;
   userName.textContent=object.login;
   loc.textContent=object.location;
-  prof.textContent='Profile: '
-  link.src=object.html_url;
+  prof.textContent=`Profile: ${object.html_url}`;
   followers.textContent=`Followers: ${object.followers}`;
   following.textContent=`Following: ${object.following}`;
   bio.textContent=`Bio: ${object.bio}`;
